@@ -19,7 +19,7 @@ const app = express();
 app.use(
     cors({
         methods: ["GET", "POST", "HEAD"], 
-        origin: ["http://127.0.0.1:5173", "http://localhost:5173", "http://192.168.1.147:5173", "https://locket-wan.vercel.app", "https://client-lk-cloned-main.vercel.app" ],
+        origin: ["http://127.0.0.1:5173", "http://localhost:5173", "http://192.168.1.105:5173", "https://locket-wan.vercel.app", "https://client-lk-cloned-main.vercel.app" ],
 
         // Nhằm cho phép client gửi cookie lên server
         credentials: true,

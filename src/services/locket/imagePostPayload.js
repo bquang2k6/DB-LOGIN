@@ -386,6 +386,8 @@ const createImagePostPayload = ({ type, imageUrl, optionsData }) => {
       return imagePostPayloadSpotify({ imageUrl, optionsData });
     case 'image_icon':
       return imagePostPayloadImageIcon({ imageUrl, optionsData });
+    case 'image_gif':
+      return imagePostPayloadImageIcon({ imageUrl, optionsData });
     case 'decorative':
       return imagePostPayloadDecorative({ imageUrl, optionsData });
     case 'custom':

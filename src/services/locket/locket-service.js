@@ -277,6 +277,9 @@ const postImage = async (userId, idToken, image, caption, overlays, options) => 
             Authorization: `Bearer ${idToken}`,
         };
 
+        // Ép cứng màu trắng cho caption GIF (gọn)
+        if (options?.type === 'image_gif') options.text_color = '#FFFFFF';
+
         const over_lay_payload = createImagePostPayload({
             type: options.type,
             imageUrl: imageUrl,
