@@ -1,0 +1,128 @@
+[
+  {
+    "userId": "test_storage_user",
+    "type": "gif_caption",
+    "timestamp": 1754733485795,
+    "userAgent": "Node.js Backend"
+  },
+  {
+    "userId": "test_storage_user",
+    "type": "gif_caption",
+    "timestamp": 1754733485818,
+    "userAgent": "Node.js Backend"
+  },
+  {
+    "userId": "test_free_user",
+    "type": "gif_caption",
+    "timestamp": 1754733485845,
+    "userAgent": "Node.js Backend"
+  },
+  {
+    "userId": "test_free_user",
+    "type": "gif_caption",
+    "timestamp": 1754733485866,
+    "userAgent": "Node.js Backend"
+  },
+  {
+    "userId": "test_premium_user",
+    "type": "gif_caption",
+    "timestamp": 1754733485894,
+    "userAgent": "Node.js Backend"
+  },
+  {
+    "userId": "test_premium_user",
+    "type": "gif_caption",
+    "timestamp": 1754733485917,
+    "userAgent": "Node.js Backend"
+  },
+  {
+    "userId": "test_premium_user",
+    "type": "gif_caption",
+    "timestamp": 1754733485941,
+    "userAgent": "Node.js Backend"
+  },
+  {
+    "userId": "test_premium_user",
+    "type": "gif_caption",
+    "timestamp": 1754733485961,
+    "userAgent": "Node.js Backend"
+  },
+  {
+    "userId": "test_premium_user",
+    "type": "gif_caption",
+    "timestamp": 1754733485985,
+    "userAgent": "Node.js Backend"
+  },
+  {
+    "userId": "test_premium_user",
+    "type": "gif_caption",
+    "timestamp": 1754733486013,
+    "userAgent": "Node.js Backend"
+  },
+  {
+    "userId": "test_premium_user",
+    "type": "gif_caption",
+    "timestamp": 1754733486035,
+    "userAgent": "Node.js Backend"
+  },
+  {
+    "userId": "test_premium_user",
+    "type": "gif_caption",
+    "timestamp": 1754733486057,
+    "userAgent": "Node.js Backend"
+  },
+  {
+    "userId": "test_premium_user",
+    "type": "gif_caption",
+    "timestamp": 1754733486078,
+    "userAgent": "Node.js Backend"
+  },
+  {
+    "userId": "test_premium_user",
+    "type": "gif_caption",
+    "timestamp": 1754733486106,
+    "userAgent": "Node.js Backend"
+  },
+  {
+    "userId": "test_premium_user",
+    "type": "gif_caption",
+    "timestamp": 1754733486132,
+    "userAgent": "Node.js Backend"
+  },
+  {
+    "userId": "test_premium_user",
+    "type": "gif_caption",
+    "timestamp": 1754733486156,
+    "userAgent": "Node.js Backend"
+  },
+  {
+    "userId": "test_premium_user",
+    "type": "gif_caption",
+    "timestamp": 1754733486176,
+    "userAgent": "Node.js Backend"
+  },
+  {
+    "userId": "test_premium_user",
+    "type": "gif_caption",
+    "timestamp": 1754733486195,
+    "userAgent": "Node.js Backend"
+  },
+  {
+    "userId": "test_premium_user",
+    "type": "gif_caption",
+    "timestamp": 1754733486218,
+    "userAgent": "Node.js Backend"
+  },
+  {
+    "userId": "pmcyI9EI1rPgvImfkwWT1Z1ZsHA2",
+    "type": "gif_caption",
+    "timestamp": 1754733597970,
+    "userAgent": "Node.js Backend"
+  },
+  {
+    "userId": "pmcyI9EI1rPgvImfkwWT1Z1ZsHA2",
+    "type": "gif_caption",
+    "timestamp": 1754733852945,
+    "userAgent": "Node.js Backend"
+  }
+]
