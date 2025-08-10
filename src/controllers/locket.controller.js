@@ -76,6 +76,30 @@ class LocketController {
                     message: "Only one type of media is allowed",
                 });
             }
+
+            // Kiểm tra giới hạn GIF caption nếu là image_gif
+            if (images && options?.type === 'image_gif') {
+                const { validateGifCaptionCreation } = require('../services/usage-limits.service');
+                
+                // Mock user plan (trong thực tế sẽ lấy từ database)
+                const userPlan = {
+                    plan_id: 'free' // Default to free plan
+                };
+                
+                const validation = validateGifCaptionCreation(userId, userPlan);
+                
+                if (!validation.valid) {
+                    logInfo("uploadMedia", `GIF caption limit exceeded for user: ${userId}`);
+                    return res.status(429).json({
+                        success: false,
+                        message: validation.message,
+                        error: "GIF_CAPTION_LIMIT_EXCEEDED"
+                    });
+                }
+                
+                logInfo("uploadMedia", `GIF caption limit check passed for user: ${userId}`);
+            }
+
             if (images) {
                 if (images[0].size > 10 * 1024 * 1024) {
                     fs.unlinkSync(images[0].path);
@@ -91,6 +115,14 @@ class LocketController {
                     overlay,
                     options
                 );
+
+                // Ghi lại usage nếu là GIF caption và upload thành công
+                if (options?.type === 'image_gif') {
+                    const { recordGifCaptionUsage } = require('../services/usage-limits.service');
+                    recordGifCaptionUsage(userId);
+                    logInfo("uploadMedia", `Recorded GIF caption usage for user: ${userId}`);
+                }
+
                 return res.status(200).json({
                     message: "Upload image successfully",
                     data: response
