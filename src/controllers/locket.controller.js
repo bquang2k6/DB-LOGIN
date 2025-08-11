@@ -59,11 +59,21 @@ class LocketController {
 
     async uploadMedia(req, res, next) {
         try {
-            const { userId, idToken, caption } = req.body;
+            const { userId, idToken, caption, plan_id } = req.body;
             const { images, videos } = req.files;
             
             const options = typeof req.body.options === 'string' ? JSON.parse(req.body.options) : req.body.options;
             const overlay = typeof req.body.overlay === 'string' ? JSON.parse(req.body.overlay) : req.body.overlay;
+
+            // Log request details for debugging
+            logInfo("uploadMedia", `Request received - userId: ${userId}, plan_id: ${plan_id}, options: ${JSON.stringify(options)}`);
+            
+            // Log plan_id validation
+            if (plan_id) {
+                logInfo("uploadMedia", `Plan ID received from request: ${plan_id}`);
+            } else {
+                logInfo("uploadMedia", `No plan_id received, defaulting to 'free'`);
+            }
 
             if (!images && !videos) {
                 return res.status(400).json({
@@ -81,23 +91,30 @@ class LocketController {
             if (images && options?.type === 'image_gif') {
                 const { validateGifCaptionCreation } = require('../services/usage-limits.service');
                 
-                // Mock user plan (trong thực tế sẽ lấy từ database)
+                // Lấy plan_id từ request body hoặc default to free
                 const userPlan = {
-                    plan_id: 'free' // Default to free plan
+                    plan_id: plan_id || 'free'
                 };
+                
+                logInfo("uploadMedia", `Validating GIF caption for user: ${userId}, plan: ${userPlan.plan_id}`);
                 
                 const validation = validateGifCaptionCreation(userId, userPlan);
                 
+                logInfo("uploadMedia", `GIF caption validation result:`, validation);
+                
                 if (!validation.valid) {
-                    logInfo("uploadMedia", `GIF caption limit exceeded for user: ${userId}`);
+                    logInfo("uploadMedia", `GIF caption limit exceeded for user: ${userId}, plan: ${userPlan.plan_id}`);
                     return res.status(429).json({
                         success: false,
                         message: validation.message,
-                        error: "GIF_CAPTION_LIMIT_EXCEEDED"
+                        error: "GIF_CAPTION_LIMIT_EXCEEDED",
+                        usage: validation.usage,
+                        limit: validation.limit,
+                        unlimited: validation.unlimited
                     });
                 }
                 
-                logInfo("uploadMedia", `GIF caption limit check passed for user: ${userId}`);
+                logInfo("uploadMedia", `GIF caption limit check passed for user: ${userId}, plan: ${userPlan.plan_id}`);
             }
 
             if (images) {
@@ -119,8 +136,9 @@ class LocketController {
                 // Ghi lại usage nếu là GIF caption và upload thành công
                 if (options?.type === 'image_gif') {
                     const { recordGifCaptionUsage } = require('../services/usage-limits.service');
-                    recordGifCaptionUsage(userId);
-                    logInfo("uploadMedia", `Recorded GIF caption usage for user: ${userId}`);
+                    const userPlan = { plan_id: plan_id || 'free' };
+                    recordGifCaptionUsage(userId, userPlan.plan_id);
+                    logInfo("uploadMedia", `Recorded GIF caption usage for user: ${userId}, plan: ${userPlan.plan_id}`);
                 }
 
                 return res.status(200).json({

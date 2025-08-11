@@ -2,6 +2,46 @@ const { logInfo, logError } = require("./logger.service");
 const fs = require('fs');
 const path = require('path');
 
+// Plan definitions with proper limits
+const PLAN_LIMITS = {
+  'free': {
+    gif_caption_daily: 2,
+    caption_daily: 1,
+    max_image_size: 3,
+    max_video_size: 7
+  },
+  'premium_lite': {
+    gif_caption_daily: 4,
+    caption_daily: 3,
+    max_image_size: 5,
+    max_video_size: 10
+  },
+  'premium': {
+    gif_caption_daily: Infinity, // Không giới hạn
+    caption_daily: 5,
+    max_image_size: 7,
+    max_video_size: 20
+  },
+  'pro_plus': {
+    gif_caption_daily: Infinity, // Không giới hạn
+    caption_daily: 5,
+    max_image_size: 10,
+    max_video_size: 25
+  },
+  'basic': {
+    gif_caption_daily: 5,
+    caption_daily: 3,
+    max_image_size: 5,
+    max_video_size: 10
+  },
+  'pro': {
+    gif_caption_daily: Infinity, // Unlimited
+    caption_daily: 25,
+    max_image_size: 15,
+    max_video_size: 30
+  }
+};
+
 // Storage file path
 const STORAGE_DIR = path.join(__dirname, '../../storage');
 const USAGE_FILE = path.join(STORAGE_DIR, 'usage_data.json');
@@ -149,36 +189,6 @@ const incrementDailyUsage = (userId, type) => {
 };
 
 /**
- * Plan limits configuration
- */
-const PLAN_LIMITS = {
-  free: {
-    gif_caption_daily: 2,
-    caption_daily: 1,
-    max_image_size: 3,
-    max_video_size: 7
-  },
-  premium_lite: {
-    gif_caption_daily: 5,
-    caption_daily: 3,
-    max_image_size: 5,
-    max_video_size: 15
-  },
-  premium: {
-    gif_caption_daily: 10,
-    caption_daily: 5,
-    max_image_size: 7,
-    max_video_size: 20
-  },
-  pro_plus: {
-    gif_caption_daily: Infinity,
-    caption_daily: Infinity,
-    max_image_size: 10,
-    max_video_size: 50
-  }
-};
-
-/**
  * Get plan details by plan ID
  */
 const getPlanDetails = (planId) => {
@@ -222,10 +232,10 @@ const validateGifCaptionCreation = (userId, userPlan) => {
 /**
  * Record successful GIF caption creation
  */
-const recordGifCaptionUsage = (userId) => {
+const recordGifCaptionUsage = (userId, planId) => {
   if (!userId) return;
   incrementDailyUsage(userId, 'gif_caption');
-  logInfo("recordGifCaptionUsage", `Recorded GIF caption usage for user: ${userId}`);
+  logInfo("recordGifCaptionUsage", `Recorded GIF caption usage for user: ${userId}, plan: ${planId || 'unknown'}`);
 };
 
 /**
