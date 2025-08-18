@@ -27,7 +27,8 @@ const cropVideo = (inputPath, outputPath) => {
             ])
             .outputOptions([
                 "-movflags +faststart",
-                "-preset ultrafast"
+                "-preset ultrafast",
+                "-r 60"
             ])
             .on("end", () => {
                 logInfo("cropVideo", "Video cropped successfully");
@@ -101,7 +102,8 @@ const compressVideo = async (inputPath, outputPath) => {
                     '-threads 1', 
                     '-movflags +faststart',
                     '-x264opts no-cabac:ref=1', 
-                    '-rc-lookahead 10' 
+                    '-rc-lookahead 10',
+                    '-r 60'
                 ])
                 .on('start', cmd => logInfo("compressVideo", `Started: ${cmd}`))
                 .on('end', () => {

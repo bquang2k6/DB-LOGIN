@@ -390,7 +390,7 @@ const createImagePostPayload = ({ type, imageUrl, optionsData }) => {
       return imagePostPayloadImageIcon({ imageUrl, optionsData });
     case 'decorative':
       return imagePostPayloadDecorative({ imageUrl, optionsData });
-    case 'custom':
+    case 'custome':
       return imagePostPayloadCustome({ imageUrl, optionsData });
     case 'background':
       return imagePostPayloadBackGround({ imageUrl, optionsData });

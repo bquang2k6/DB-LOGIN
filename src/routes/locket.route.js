@@ -22,4 +22,9 @@ router.post(
     locketController.refreshToken
 )
 
+router.post(
+    "/getMomentV2",
+    locketController.getMomentV2
+)
+
 module.exports = router;

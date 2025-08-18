@@ -174,6 +174,32 @@ class LocketController {
     }
 
 
+    async getMomentV2(req, res, next) {
+        try {
+            const authorization = req.headers && req.headers.authorization;
+            if (!authorization) {
+                return res.status(401).json({ success: false, message: "Missing Authorization header" });
+            }
+            const defaultPayload = { limit: 50, pageToken: null, userUid: null };
+            const body = req.body;
+            const payload = body && Object.keys(body).length ? body : defaultPayload;
+
+            logInfo("getMomentV2", `Forwarding payload: ${JSON.stringify(payload)}`);
+
+            const response = await fetch("https://api.locket-dio.com/locket/getMomentV2", {
+                method: "POST",
+                headers: { "content-type": "application/json", authorization },
+                body: JSON.stringify(payload)
+            });
+
+            const data = await response.json();
+            return res.status(response.ok ? 200 : response.status).json(data);
+        } catch (error) {
+            next(error);
+        }
+    }
+
+
     async refreshToken(req, res, next) {
         const { refreshToken  } = req.body;
 
