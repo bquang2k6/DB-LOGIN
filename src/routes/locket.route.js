@@ -27,4 +27,14 @@ router.post(
     locketController.getMomentV2
 )
 
+router.post(
+    "/reactMomentV2",
+    locketController.reactMomentV2
+)
+
+router.post(
+    "/reactinfoMomentV2",
+    locketController.reactinfoMomentV2
+)
+
 module.exports = router;

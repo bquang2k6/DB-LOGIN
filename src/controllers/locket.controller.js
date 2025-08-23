@@ -198,6 +198,82 @@ class LocketController {
             next(error);
         }
     }
+    async reactMomentV2(req, res, next) {
+        try {
+            const authorization = req.headers && req.headers.authorization;
+            if (!authorization) {
+                return res.status(401).json({ success: false, message: "Missing Authorization header" });
+            }
+    
+            const { emoji, moment_id, intensity = 0 } = req.body;
+    
+            // Validate required fields
+            if (!emoji || !moment_id) {
+                return res.status(400).json({
+                    success: false,
+                    message: "emoji and moment_id are required"
+                });
+            }
+    
+            const payload = {
+                reactionInfo: {
+                    emoji: emoji,
+                    moment_id: moment_id,
+                    intensity: intensity
+                }
+            };
+    
+            logInfo("reactMomentV2", `Forwarding payload: ${JSON.stringify(payload)}`);
+    
+            const response = await fetch("https://api.locket-dio.com/locket/reactMomentV2", {
+                method: "POST",
+                headers: { 
+                    "content-type": "application/json", 
+                    authorization 
+                },
+                body: JSON.stringify(payload)
+            });
+    
+            const data = await response.json();
+            return res.status(response.ok ? 200 : response.status).json(data);
+        } catch (error) {
+            next(error);
+        }
+    }
+    async reactinfoMomentV2(req, res, next) {
+    try {
+        const authorization = req.headers && req.headers.authorization;
+        if (!authorization) {
+            return res.status(401).json({ success: false, message: "Missing Authorization header" });
+        }
+        
+        // Lấy idMoment từ request body
+        const { idMoment } = req.body;
+        
+        // Luôn sử dụng format cố định
+        const payload = { 
+            pageToken: null, 
+            idMoment: idMoment || "", 
+            limit: null 
+        };
+
+        logInfo("reactinfoMomentV2", `Forwarding payload: ${JSON.stringify(payload)}`);
+
+        const response = await fetch("https://api.locket-dio.com/locket/getInfoMomentV2", {
+            method: "POST",
+            headers: { "content-type": "application/json", authorization },
+            body: JSON.stringify(payload)
+        });
+
+        const data = await response.json();
+        return res.status(response.ok ? 200 : response.status).json(data);
+    } catch (error) {
+        next(error);
+    }
+}
+
+
+
 
 
     async refreshToken(req, res, next) {
