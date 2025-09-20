@@ -130,3 +130,4 @@ dist
 .pnp.*
 menu-translation-output.json
 .idea
+node_modules
